@@ -1,0 +1,815 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --color-fg: #eee;
+    --color-bg: #121212;
+    --heading: #0464a4;
+}
+.menuB,
+.filter-white{
+    filter: invert(100%) sepia(0%) saturate(7435%) hue-rotate(65deg) brightness(105%) contrast(95%);
+}
+.filter > p{
+    color: var(--color-fg);
+}
+div.taskheading > h2{
+    color: var(--color-fg);
+}
+dialog{
+    background-color: #272727;
+}
+div.overlay{
+    background-color: rgba(29, 25, 25, 0.71);
+}
+div.task-div{
+    background-color: #3d3c3c;
+}
+textarea,
+.formdetails > input,
+select, 
+div.todo-options > input[type=date]{
+    background-color: #474848;
+    color: var(--color-bg);
+}
+.addprojectbtn{
+    color: var(--color-fg);
+}
+form.addForm > input,
+form.editForm > input{
+    background-color: #3d3c3c;
+}
+p.thetasktitle{
+    cursor: pointer;
+}
+div.main-task-viewer *p{
+    color: var(--color-fg);
+}
+@media (prefers-color-scheme: light){
+    :root{
+        --color-bg: #cfcdcd;
+        --color-fg: #1A1C20;
+    }
+    .backImg,
+    .del-task,
+    .menuB{
+        filter: brightness(0) saturate(100%) invert(0%) sepia(98%) saturate(6%) hue-rotate(31deg) brightness(98%) contrast(101%);
+    }
+    .addprojectbtn,
+    .filter > p{
+        color: var(--color-bg);
+    }
+    dialog{
+        background-color: #343232;
+    }
+    div.overlay{
+        background-color: rgba(184, 179, 179, 0.9);
+    }
+    div.task-div{
+        background-color: #d1cdcd;
+    }
+    textarea#tasknote,
+    input#tasktitle,
+    select#theProjects, 
+    input#duedate{
+        background-color: #d1cdcd;
+    }
+    form.addForm > input,
+    form.editForm > input{
+        background-color: #d1cdcd; 
+    }
+    div.taskheading > h2,
+    p.thenote,
+    p.date,
+    .projectname{
+        color: var(--color-bg);
+    }
+}
+html, body{
+    height: 100%;
+}
+html{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+div.container{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 0.2fr 3fr 0.3fr;
+}
+header{
+    grid-area: 1/1/1/2;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    width: 100%;
+}
+header > h1{
+    color: var(--heading);
+    font-size: 1.5rem;
+}
+div.menu{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+button.backBtn,
+button.delbtn,
+button.closeAdd,
+button.closeEdit,
+button.closeBtn,
+button.menuBtn,
+button.addprojectbtn{
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+div.menu > .closeBtn > img,
+div.menu > .menuBtn > img{
+    color: var(--color-fg);
+    width: 12%;
+}
+button#close.closeBtn{
+    display: none;
+    z-index: 11;
+}
+div.main{
+    padding-top: 50px;
+}
+div.main-container{
+    grid-area: 3/1/3/2;
+    width: 90%;
+    height: 100%;
+    background-color: #272727;
+    border-radius: 20px;
+    margin: auto;
+    display: grid;
+    grid-template-rows: 0.2fr 3fr 0.4fr;
+    padding: 5px;
+    gap: 20px;
+}
+div.main-task-viewer{
+    grid-area: 3/1/3/2;
+    width: 90%;
+    height: 100%;
+    background-color: #272727;
+    border-radius: 20px;
+    margin: auto;
+    display: none;
+    grid-template-rows: 0.2fr 3fr 0.4fr;
+    padding: 5px;
+    gap: 15px;
+    padding: 20px;
+}
+
+div.main-heading{
+    grid-area: 1/1/1/2;
+    padding: 10px;
+}
+div.main-heading > h3{
+    color: var(--heading);
+    font-size: 1.7rem;
+
+}
+div.main-content{
+    grid-area: 2/1/3/2;
+    display: flex;
+    justify-content: center;
+}
+div.add-taskdiv{
+    grid-area: 3/1/4/2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+}
+
+div.add-taskdiv > button.addTask{
+    text-transform: uppercase;
+    font-size: 1rem;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: var(--heading);
+    color: var(--color-bg);
+    cursor: pointer;
+    border: none;
+}
+button.backBtn > img{
+    width: 30px;
+}
+dialog{
+    top: 100px;
+    left: 20px;
+    width: 90%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 12;
+
+}
+.dailog-Edit,
+.addprojectdialog{
+    height: 80%;
+}
+div.overlay{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+div.addbtn{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+div.taskproject{
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+div.todoinfo{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+div.todoinfo > img{
+    width: 20px;
+    opacity: 0.6;
+}
+div.todoinfo > h4{
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+div.taskheading {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+div.taskheading > h2{
+    text-align: center;
+}
+hr{
+    border: 1px solid var(--heading);
+    width: 80%;
+}
+p.thenote{
+    font-size: 1.2rem;
+}
+div.taskControl{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+img.backToAll{
+    width: 30px;
+    cursor: pointer;
+}
+p.date{
+    border: 1px solid var(--heading);
+    padding: 5px;
+    border-radius: 10px;
+}
+div.dailog-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+    width: 100%;
+}
+.filter > p{
+    font-size: 1rem;
+}
+
+div.filter-div, 
+div.project-div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+.filter{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.the-projects{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.filter > img{
+    width: 2.8rem;
+    padding: 10px;
+}
+div.add-project{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+
+}
+
+div.dialog-heading > h3{
+    color: var(--heading);
+    font-size: 1.3rem;
+}
+.addprojectbtn{
+    border: none;
+}
+.addprojectbtn > h3{
+    font-size: 2rem;
+}
+div.projects{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.edit-delete {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+}
+div.edit-delete *{
+    width: 20px;
+    cursor: pointer;
+}
+form.addForm,
+form.editForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+form.addForm > input,
+form.editForm > input{
+    height: 2.4rem;
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--color-fg);
+    border: 1px solid var(--color-bg);
+}
+form.addForm > button,
+form.editForm > button{
+    text-transform: uppercase;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #4bb2f9;
+    color: var(--color-bg);
+    border: none;
+}
+
+button.closeAdd,
+button.closeEdit{
+    position: absolute;
+    top: 0;
+    left: 230px;
+}
+button#closeAdd.closeAdd > img,
+button#closeEdit.closeEdit > img{
+    color: var(--color-fg);
+    width: 30%;
+}
+div.content{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+}
+div.no-task-div{
+    width: 100%;
+    padding: 30px;
+}
+div.content{
+    width: 90%;
+}
+div.no-task-div > h4{
+    font-size: 1rem;
+}
+h4.no-task{
+    color: #4bb2f9;
+    text-align: center;
+    font-weight: 200;
+}
+div.task-div{
+    display: flex;
+    width: 100%;
+    height: 2.4rem;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding: 10px;
+}
+div.task-div img{
+    width: 8%;
+}
+p.thetasktitle{
+    font-size: 1.2rem;
+}
+div.right{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+div.dialog-container4{
+    width: 100%;
+    height: 100%;
+}
+form.addTaskForm{
+    width: 100%;
+    height: 100%;
+}
+div.formdetails{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 40px;
+}
+label{
+    display: block;
+    font-size: 1.4rem;
+    color: var(--heading);
+    font-weight: 700;
+}
+div.moreDetails{
+    display: flex;
+    justify-content: space-between;
+}
+textarea{
+    overflow: auto;
+    height: 200px;
+}
+textarea,
+.formdetails > input,
+select, 
+div.todo-options > input[type=date]{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #474848;
+    color: var(--color-fg);
+    border: none;
+}
+.formdetails > input::placeholder,
+textarea::placeholder{
+    color: var(--color-fg);
+    font-size: 1rem;
+}
+textarea,
+    input[type=text]{
+        font-size: 1.2rem;
+    }
+.formdetails > input{
+    height: 2.8rem;
+}
+select, 
+div.todo-options > input[type=date]{
+    height: 2.8rem;
+    width: 150px;
+    padding: 5px;
+    font-size: 1rem;
+}
+.todo-options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+div.control{
+    grid-area: 2/1/2/2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px;
+    
+}
+div.control > button.addATask{
+    text-transform: uppercase;
+    font-size: 1rem;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: var(--heading);
+    color: var(--color-bg);
+    cursor: pointer;
+    border: none;
+}
+.del-task{
+    cursor: pointer;
+    display: none;
+}
+/*Tablets*/
+@media only screen and (min-width: 541px){
+    dialog{
+        top: 140px;
+        left: 40px;
+        width: 90%;
+    
+    }
+    header > h1{
+        font-size: 2.5rem;
+    }
+    .filter > p{
+        font-size: 1.6rem;
+    }
+    div.menu > .closeBtn > img,
+    div.menu > .menuBtn > img{
+        width: 24%;
+    }
+    button.closeAdd,
+    button.closeEdit{
+        position: absolute;
+        top: 0;
+        left: 500px;
+    }
+    button.backBtn > img{
+        width: 80px;
+    }
+    .filter > img{
+        width: 3.8rem;
+    }
+    div.task-div img{
+        width: 6%;
+    }
+    div.edit-delete *{
+        width: 40px;
+    }
+    div.main-heading > h3{
+        font-size: 2.7rem;
+    }
+    div.add-taskdiv > button.addTask{
+        font-size: 2rem;
+    }
+    div.dialog-heading > h3{
+        font-size: 2.3rem;
+    }
+    button.addprojectbtn > h3{
+        font-size: 4rem;
+    }
+    form.addTaskForm{
+        grid-template-rows: 1fr 0.4fr;
+    }
+    form.addForm > input,
+    form.editForm > input{
+        height: 4.4rem;
+        padding: 20px;
+    }
+    .formdetails > input{
+        height: 4.8rem;
+    }
+    textarea{
+        height: 40%;
+    }
+    select, 
+    div.todo-options > input[type=date]{
+        height: 3rem;
+        width: 300px;
+        padding: 5px;
+        font-size: 2rem;
+    }
+    label{
+        font-size: 1.5rem;
+    }
+    div.formdetails{
+        gap: 15px;
+    }
+    form.addForm > button,
+    form.editForm > button{
+        font-size: 2rem;
+        padding: 15px;
+    }
+    div.control > button.addATask{
+        font-size: 2rem;
+    }
+    .formdetails > input::placeholder,
+    textarea::placeholder{
+        font-size: 2rem;
+    }
+    div.no-task-div > h4{
+        font-size: 2rem;
+    }
+    div.task-div{
+        height: 4.4rem;
+    }
+    p.thetasktitle{
+        font-size: 2.2rem;
+    }
+    textarea,
+    input[type=text]{
+        font-size: 2.2rem;
+    }
+    div.filter-div, 
+    div.project-div{
+        gap: 10px;
+    }
+    div.taskheading > h2{
+        font-size: 2.5rem;
+    }
+    p.thenote{
+        font-size: 1.7rem;
+    }
+    div.todoinfo > img{
+        width: 40px;
+    }
+    div.todoinfo > h4{
+        font-size: 1.2rem;
+    }
+    img.backToAll{
+        width: 50px;
+    }
+    p.date{
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 1.4rem;
+    }
+}
+
+/* Laptops */
+@media only screen and (min-width: 1024px){
+    div.container{
+        display: grid;
+        grid-template-columns: 0.6fr 3fr;
+        grid-template-rows: 0.3fr 3fr;
+        gap: 20px;
+    }
+    div.sidebar{
+        padding-top: 100px;
+        grid-area: 1/1/3/1;
+        background-color: #3d3c3c;
+    }
+    header{
+        grid-area: 2/1/1/3;
+        background-color: #3d3c3c;
+        justify-content: center;
+    }
+    div.main{
+        grid-area: 2/2/3/3;
+        display: flex;
+    }
+    div.main-container{
+        grid-area: 3/1/3/2;
+        width: 60%;
+        height: 90%;
+        display: grid;
+        grid-template-rows: 0.2fr 3fr 0.4fr;
+        padding: 15px;
+        gap: 20px;
+    }
+    .filter > p{
+        font-size: 1rem;
+    }
+    div.menu {
+        display: none;
+    }
+    button.closeAdd,
+    button.closeEdit{
+        position: absolute;
+        top: 0;
+        left: 280px;
+        width: 120px;
+    }
+    button.backBtn > img{
+        width: 30px;
+    }
+    .filter > img{
+        width: 2.5rem;
+    }
+    div.task-div img{
+        width: 3%;
+    }
+    div.edit-delete *{
+        width: 18px;
+    }
+    div.main-heading > h3{
+        font-size: 1.5rem;
+    }
+    div.add-taskdiv > button.addTask{
+        font-size: 1.1rem;
+    }
+    dialog{
+        top: 100px;
+        left: 300px;
+        width: 40%;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        z-index: 12;
+    }
+    div.dialog-heading > h3{
+        font-size: 1rem;
+    }
+    button.addprojectbtn > h3{
+        font-size: 1.6rem;
+    }
+    form.addTaskForm{
+        grid-template-rows: 1fr 0.4fr;
+    }
+    form.addForm > input,
+    form.editForm > input{
+        height: 2rem;
+        padding: 15px;
+    }
+    .add-task-dialog{
+        top: 100px;
+        left: 350px;
+        width: 60%;
+    }
+    .formdetails > input{
+        height: 2rem;
+    }
+    textarea{
+        height: 20%;
+    }
+    select, 
+    div.todo-options > input[type=date]{
+        height: 2rem;
+        width: 300px;
+        padding: 5px;
+        font-size: 1rem;
+    }
+    label{
+        font-size: 1rem;
+    }
+    div.formdetails{
+        gap: 10px;
+    }
+    form.addForm > button,
+    form.editForm > button{
+        font-size: 1.3rem;
+    }
+    div.control{
+        align-items: center;
+    }
+    div.control > button.addATask{
+        font-size: 1rem;
+    }
+    .formdetails > input::placeholder,
+    textarea::placeholder{
+        font-size: 1rem;
+    }
+    div.no-task-div > h4{
+        font-size: 1rem;
+    }
+    div.task-div{
+        height: 2rem;
+    }
+    p.thetasktitle{
+        font-size: 1rem;
+    }
+    textarea,
+    input[type=text]{
+        font-size: 1rem;
+    }
+    div.filter-div, 
+    div.project-div{
+        gap: 10px;
+    }
+    form.addForm > input,
+    form.editForm > input{
+        width: 100%;
+    }
+    form.addForm > button,
+    form.editForm > button{
+        font-size: 1rem;
+    }
+    div.main-task-viewer{
+        width: 50%;
+        height: 80%;
+    }
+    p.thenote{
+        font-size: 1rem;
+    }
+    div.taskheading > h2{
+        font-size: 1.5rem;
+    }
+    p.date{
+        font-size: 0.8rem;
+    }
+    div.todoinfo > h4{
+        font-size: 0.8rem;
+    }
+    div.todoinfo > img{
+        width: 15px;
+    }
+    img.backToAll{
+        width: 2rem;
+    }
+}
